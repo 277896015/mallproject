@@ -5,20 +5,18 @@ import Vue from 'vue';
 Vue.use(Vuex);
 //创建一个储存状态的实例
 const store = new Vuex.Store({
-    state: { //储存共用全局的变量
-        token: localStorage.getItem('token')||"",
-        city:"北京"
-    },
-    mutations: { //提交修改数据的事件
-        saveToken(state, token) {
-            state.token = token;
-            //持久性的保存数据 localstorge
-            localStorage.setItem("token",token)
+        state: { //储存共用全局的变量
+            token: localStorage.getItem('token') || "",
+
         },
-        changeCity(state,city){
-            state.city=city;
+        mutations: { //提交修改数据的事件
+            saveToken(state, token) {
+                state.token = token;
+                //持久性的保存数据 localstorge
+                localStorage.setItem("token", token)
+            },
+
         }
-    }
-})
-//暴露实例
+    })
+    //暴露实例
 export default store;

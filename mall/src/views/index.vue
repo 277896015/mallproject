@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <!-- 首页  购物车 我的 -->
+        <!-- 首页  购物车 我的 --> 
         <section>
           <router-view></router-view>
         </section>
@@ -15,7 +15,7 @@
         components: {
             tabbar: tabbar
         }
-    };
+    }
 </script>
 <style>
 

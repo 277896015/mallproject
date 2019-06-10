@@ -22,12 +22,17 @@ const router = new Router({
             name: "login",
             component: () =>
                 import ("@/views/login")
+        },
+        {
+            path: '/',
+            redirect: "/index/home"
         }, {
             path: '/index',
             name: 'index',
             component: () =>
                 import ('@/views/index'),
             children: [
+
                 //home movie mine  子路由
                 homeRouter,
                 cartRouter,

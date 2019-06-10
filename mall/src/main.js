@@ -20,9 +20,13 @@ FastClick.attach(document.body);
 
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
-import { Search } from 'mint-ui';
 
-Vue.component(Search.name, Search);
+import { Swipe, SwipeItem } from 'mint-ui';
+
+Vue.component(Swipe.name, Swipe);
+Vue.component(SwipeItem.name, SwipeItem);
+
+
 new Vue({
     //注入到根实例中
     store,

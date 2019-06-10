@@ -35,10 +35,10 @@
 <style scoped>
     .footer {
         background-color: whitesmoke;
-        height: 8vh;
         padding: 5px;
         display: flex;
         justify-content: space-around;
+        /* space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。 */
     }
     
     li {
