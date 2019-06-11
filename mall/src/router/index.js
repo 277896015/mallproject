@@ -51,20 +51,14 @@ const router = new Router({
                 component: () =>
                     import ('@/views/detail')
             }],
-            beforeEnter: (to, from, next) => {
-                console.log("page1路由独享守卫");
-                next();
-            }
+
         }, {
             path: "/page2",
             name: "page2",
             meta: {
                 auth: true
             },
-            beforeEnter: (to, from, next) => {
-                console.log("page2路由独享守卫");
-                next();
-            },
+
             component: () =>
                 import ("@/views/page2")
         }, {
@@ -73,10 +67,7 @@ const router = new Router({
             meta: {
                 auth: true
             },
-            beforeEnter: (to, from, next) => {
-                console.log("page3路由独享守卫");
-                next();
-            },
+
             component: () =>
                 import ("@/views/page3")
         }

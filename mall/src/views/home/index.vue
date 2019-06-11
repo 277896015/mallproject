@@ -39,14 +39,17 @@
                   </div>
                 </div>
                
-        <div class="product" v-for='(shop,index) in shop_list'>
+        <div class="product" v-for="(item,index) in results">
 <div class="wrs">
-    <div class="productimg"></div>
-    <div>商品{{shop.id}}</div>
-    <div>价格{{shop.price}}</div>
-    数量{{shop.num || ''}}
+    <div class="productimg"><img :src="'/api'+item.pic" alt=""></div>
+    <div>{{item.title}}</div>
+    <div>价格{{item.price}}</div>
+    运费{{item.fee}}
+    <br>
+    分类{{item.sorts}}
     <td>
         <div @click='add_db(shop)' class="btn">加入购物车</div>
+        <div @click='buy(shop)' class="btn">立即购买</div>
         
     </td>
 </div>
@@ -69,29 +72,24 @@
 <script>
     export default {
         name: "home",
+        created() {
+            this.init();
+
+        },
 
         data() {
             return {
-                shop_list: [{
-                    id: 1,
-                    name: '鱼香肉丝',
-                    price: 12
-                }, {
-                    id: 2,
-                    name: '宫保鸡丁',
-                    price: 14
-                }, {
-                    id: 3,
-                    name: '土豆丝',
-                    price: 10
-                }, {
-                    id: 4,
-                    name: '米饭',
-                    price: 2
-                }]
+                results: ""
             };
         },
         methods: {
+            init() {
+                this.$axios.get('/api/add/list').then(res => {
+                    console.log(res.data)
+                    this.results = res.data.results;
+                })
+
+            },
             tijiao: function() {
                 alert(this.$refs.searchs.value);
 
@@ -123,14 +121,18 @@
     
     .product {
         width: 100vw;
-        height: 12vh;
+        height: 15vh;
         border-bottom: 1px solid gray;
     }
     
     .productimg {
         height: 10vh;
-        width: 15vh;
-        background: rebeccapurple;
+        width: 20vw;
+    }
+    
+    .productimg img {
+        height: 10vh;
+        width: 20vw;
     }
     
     .icons {
