@@ -48,7 +48,7 @@
     <br>
     分类{{item.sorts}}
     <td>
-        <div @click='add_db(shop)' class="btn">加入购物车</div>
+        <div @click='addToCart(item)' class="btn">加入购物车</div>
         <div @click='buy(shop)' class="btn">立即购买</div>
         
     </td>
@@ -70,6 +70,10 @@
 </div>
 </template>
 <script>
+    import {
+
+        mapActions
+    } from 'vuex'
     export default {
         name: "home",
         created() {
@@ -79,10 +83,16 @@
 
         data() {
             return {
-                results: ""
+                results: "",
+                msg: "vuex购物车"
             };
         },
+        computed: {
+
+        },
         methods: {
+            ...mapActions(['addToCart']),
+
             init() {
                 this.$axios.get('/api/add/list').then(res => {
                     console.log(res.data)
@@ -94,9 +104,10 @@
                 alert(this.$refs.searchs.value);
 
             },
-            add_db: function(message) {
-                console.log(message);
+            buy: function(shop) {
+                console.log(shop);
             }
+
 
 
         },

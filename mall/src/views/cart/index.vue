@@ -2,12 +2,14 @@
 <div>
     <div class="carts">
         <section> 
-            <div class="product" v-for='(shop,index) in shop_list'>
+            <div class="product" v-for='(shop,index) in $store.state.cartlist'>
                 <div class="wrs" >
-<div class="productimg"></div>
-<div>商品{{shop.id}}</div>
+<div class="productimg">
+        <img :src="'/api'+shop.pic" alt="">
+</div>
+<div>{{shop.title}}</div>
 <div>价格{{shop.price}}</div>
-数量{{shop.num || ''}}
+邮费{{shop.fee || ''}}
  <td>   
         <span @click='add_db(shop)' class="btnadd">+</span>
         <span @click='desc_db(shop)' class="btndesc">-</span>
@@ -20,27 +22,21 @@
 </div>
 </template>
 <script>
+    import {
+
+
+        mapActions
+    } from "vuex"
     export default {
         name: 'cart',
+        computed: {
+
+
+        },
         data() {
             return {
-                shop_list: [{
-                    id: 1,
-                    name: '鱼香肉丝',
-                    price: 12
-                }, {
-                    id: 2,
-                    name: '宫保鸡丁',
-                    price: 14
-                }, {
-                    id: 3,
-                    name: '土豆丝',
-                    price: 10
-                }, {
-                    id: 4,
-                    name: '米饭',
-                    price: 2
-                }]
+                msg: '已添加的商品'
+
             };
         },
     }
@@ -71,6 +67,11 @@
         border: 2px solid red;
         background: red;
         border-radius: 15px;
+    }
+    
+    .productimg img {
+        height: 10vh;
+        width: 20vw;
     }
     
     .carts {
