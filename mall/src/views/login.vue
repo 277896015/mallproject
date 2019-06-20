@@ -7,7 +7,7 @@
     
     <div class="biaodan">
 
-        <h2>登陆页面</h2>
+        
         <form>
             账号：<input type="text" v-model="formData.username" placeholder="输入账号" class="username"><br>
             密码：<input type="password" v-model="formData.password" placeholder="输入密码" class="password" autocomplete><br>
@@ -65,14 +65,6 @@
                             }
 
 
-                            // console.log(res.data)
-                            //     //保存token
-                            // this.$store.commit("saveToken", res.data.token);
-                            // this.$router.push('/index/home');
-                            // // console.log(this.$route.query)
-                            // if (this.$route.query.redirect) {
-                            //     this.$router.push(this.$route.query.redirect);
-                            // }
                         })
                 }
 

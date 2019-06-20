@@ -5,6 +5,8 @@ module.exports = {
     meta: {
         auth: true
     },
+
     component: () =>
-        import ('@/views/mine')
+        import ('@/views/mine'),
+
 }

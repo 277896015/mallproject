@@ -43,18 +43,19 @@
 <div class="wrs">
     <div class="productimg"><img :src="'/api'+item.pic" alt=""></div>
     <div>{{item.title}}</div>
-    <div>{{item._id}}</div>
+   
     <div>价格{{item.price}}</div>
     运费{{item.fee}}
     <br>
     分类{{item.sorts}}
     <td>
-        <div @click='addToCart(item)' class="btn">加入购物车</div>
+        <div @click='addToCart(item)' class="btn">加入购物车</div><br>
         <div @click='buy(shop)' class="btn">立即购买</div>
         
     </td>
+    
 </div>
-           
+        
 
         </div>
 
@@ -135,6 +136,7 @@
         width: 100vw;
         height: 15vh;
         border-bottom: 1px solid gray;
+        font-size: 70%
     }
     
     .productimg {

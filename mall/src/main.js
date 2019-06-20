@@ -4,7 +4,7 @@ import axios from 'axios';
 import router from './router'
 import store from "./stores"
 
-import '@/requests/http'
+
 import '@/assets/css/reset.css'
 import '@/assets/css/border.css'
 import "@/assets/css/common.css"

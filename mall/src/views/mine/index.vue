@@ -1,6 +1,6 @@
 <template>
     <div class="flexcolumn">
-        <div><i class="iconfont icon-yonghu"></i>个人信息{{userid}}</div>
+        <div @click.prevent="myinfo()"><i class="iconfont icon-yonghu" ></i>个人信息</div>
         <div><i class="iconfont icon-shoucang"></i>我的收藏</div>
         <div> <i class="iconfont icon-order_icon"></i>我的订单</div>
         <div><i class="iconfont icon-hongbao"></i> 红 包 </div>
@@ -18,6 +18,10 @@
             }
         },
         methods: {
+            myinfo() {
+                this.$router.push('/index/myinfo');
+
+            },
             tuichu() {
                 this.$store.commit("delToken");
                 this.$store.commit("delUserid");

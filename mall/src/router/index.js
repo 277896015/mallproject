@@ -4,6 +4,8 @@ import Router from 'vue-router'
 import homeRouter from './home'
 import cartRouter from './cart'
 import mineRouter from './mine'
+//子路由
+import myinfoRouter from './myinfo'
 
 
 Vue.use(Router)
@@ -36,7 +38,8 @@ const router = new Router({
                 //home movie mine  子路由
                 homeRouter,
                 cartRouter,
-                mineRouter
+                mineRouter,
+                myinfoRouter
             ]
         },
         {
