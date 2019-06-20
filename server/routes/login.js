@@ -3,19 +3,20 @@ const router = express.Router();
 const user = require('../models/user');
 const jwt = require('jsonwebtoken');
 const config = require('../config')
+const md5 = require('md5');
 
 router.post("/", function(req, res) {
     //数据库匹配数据
     user.find({
         username: req.body.username,
-        password: req.body.password,
+        password: md5(req.body.password)
 
 
     }, function(err, result) {
         if (err) throw err;
 
         if (result.length) { //匹配成功
-            // console.log(result);
+            console.log(result[0]._id);
             const token = jwt.sign({ //生成token
                 username: req.body.username //需要加密的数据
             }, config.secret, { //加密签名
@@ -25,47 +26,20 @@ router.post("/", function(req, res) {
             res.json({
                 status: 200,
                 message: "登录成功",
+                userid: result[0]._id,
                 token: token
             })
 
         } else { //匹配不成功重定向到登录
             res.json({
-                status: 600,
-                message: "登陆失败"
+                status: 500,
+                message: "用户不存在或密码不正确"
             })
 
         }
     })
 
-    // user.find(req.body).exec(function(err, result) {
-    //     if (err) {
-    //         res.json({
-    //             status: 600,
-    //             message: "登陆失败"
-    //         })
-    //     } else {
-    //         // console.log(result);
-    //         const token = jwt.sign({ //生成token
-    //             username: req.body.username //需要加密的数据
-    //         }, config.secret, { //加密签名
-    //             expiresIn: 30 //过期时间
-    //         })
-    //         console.log(token);
-    //         res.json({
-    //             status: 200,
-    //             message: "登录成功",
-    //             token: token
-    //         })
-    //     }
-
-    // })
 })
-
-
-
-
-
-
 
 
 module.exports = router;

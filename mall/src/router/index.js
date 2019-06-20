@@ -78,7 +78,7 @@ const router = new Router({
 //全局前置守卫
 router.beforeEach((to, from, next) => {
     console.log("全局前置守卫")
-    if (to.meta.auth) { //我自己设置的
+    if (to.meta.auth) { //我自己设置的 meta:auth: true
         //需要登录权限
         if (localStorage.getItem('token')) { //你已经登录
             next();

@@ -43,6 +43,7 @@
 <div class="wrs">
     <div class="productimg"><img :src="'/api'+item.pic" alt=""></div>
     <div>{{item.title}}</div>
+    <div>{{item._id}}</div>
     <div>价格{{item.price}}</div>
     运费{{item.fee}}
     <br>

@@ -85,6 +85,10 @@
                                 alert("注册成功");
                                 this.$router.push('/login');
 
+                            } else if (res.data.status == 600) {
+                                alert(res.data.message);
+
+
                             } else {
                                 alert("注册失败，请重新注册");
                             }

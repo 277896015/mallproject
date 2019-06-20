@@ -12,7 +12,9 @@
             账号：<input type="text" v-model="formData.username" placeholder="输入账号" class="username"><br>
             密码：<input type="password" v-model="formData.password" placeholder="输入密码" class="password" autocomplete><br>
             <button @click.prevent="send()" class="button">登陆</button>
+
         </form>
+        <button @click.prevent="gotoregister()" class="button">去注册</button>
 
         
     </div>
@@ -46,6 +48,8 @@
                         .then(res => {
                             if (res.data.status == 200) {
                                 this.$store.commit("saveToken", res.data.token);
+                                this.$store.commit("saveUserid", res.data.userid);
+
 
                                 alert("登录成功");
 
@@ -83,6 +87,9 @@
                 //             this.$router.push(this.$route.query.redirect);
                 //         }
                 //     })
+            },
+            gotoregister() {
+                this.$router.push('register');
             }
 
 
@@ -138,5 +145,6 @@
         text-decoration: none;
         display: inline-block;
         font-size: 3vw;
+        margin-top: 2vh;
     }
 </style>

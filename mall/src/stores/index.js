@@ -7,13 +7,28 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: { //储存共用全局的变量
         token: localStorage.getItem('token') || "",
-        cartlist: [],
+        userid: localStorage.getItem('userid') || "",
+        cartlist: []
+
     },
     mutations: { //提交修改数据的事件
         saveToken(state, token) {
             state.token = token;
             //持久性的保存数据 localstorge
             localStorage.setItem("token", token)
+        },
+        saveUserid(state, userid) {
+            state.userid = userid;
+            //持久性的保存数据 localstorge
+            localStorage.setItem("userid", userid)
+        },
+        delToken(state) {
+            state.token = '';
+            localStorage.removeItem("token"); //删除token
+        },
+        delUserid(state) {
+            state.userid = '';
+            localStorage.removeItem("userid"); //删除userid
         },
         add(state, n) {
             // console.log(state,{id})
