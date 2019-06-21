@@ -40,37 +40,135 @@ router.post("/", function(req, res) {
 })
 router.post("/update", function(req, res) {
 
+        console.log("进入路由update")
+        console.log("解析数据")
+        const form = new formidable.IncomingForm();
+        form.keepExtensions = true;
+        form.uploadDir = path.join(__dirname, "../", "uploads");
+        form.parse(req, function(err, fields, files) {
+            if (err) throw err;
+
+            user.find({
+                _id: fields.userid,
+
+
+
+            }, function(err, result) {
+                if (err) throw err;
+
+                if (result.length) { //查到数据
+                    //组装新数据
+                    var obj = {
+                        ...fields,
+                        touxiang: "/" + path.basename(files.pic.path),
+                        password: md5(fields.password)
+                    }
+                    console.log(obj);
+                    user.findByIdAndUpdate(fields.userid, obj, function(err) {
+                            if (err) throw err;
+                            console.log("更新成功");
+                            res.json({
+                                status: 200,
+                                message: "成功"
+                            })
+
+                        })
+                        // const userInstance = new user(obj);
+                        // userInstance.save(function(err) {
+                        //     if (err) {
+                        //         res.json({
+                        //             status: 500,
+                        //             message: "失败"
+                        //         })
+                        //     } else {
+                        //         res.json({
+                        //             status: 200,
+                        //             message: "成功"
+                        //         })
+                        //     }
+                        // })
+
+
+
+
+                } else { //
+                    res.json({
+                        status: 500,
+                        message: "失败"
+                    })
+
+
+
+                }
+            })
+
+        })
+
+    })
+    //没有图片更新的路由
+router.post("/picnoupdate", function(req, res) {
+
+    console.log("进入路由picnoupdate")
 
     const form = new formidable.IncomingForm();
     form.keepExtensions = true;
     form.uploadDir = path.join(__dirname, "../", "uploads");
-
-    console.log(fields)
-
-
-    user.find({
-        _id: fields.userid
-    }, function(err, results) {
+    form.parse(req, function(err, fields, files) {
         if (err) throw err;
+        user.find({
+            _id: fields.userid,
 
-        if (results.length) { //匹配成功
 
-            res.json({
-                status: 200,
-                results: results[0],
-            })
 
-        } else { //匹配不成功重定向到登录
-            console.log("找不到此用户");
-            res.json({
-                status: 500,
-                message: "用户不存在"
-            })
+        }, function(err, result) {
+            if (err) throw err;
 
-        }
+            if (result.length) { //数据库查到数据
+                var obj = {
+                    ...fields,
+
+                    password: md5(fields.password)
+                }
+                console.log(obj);
+                user.findByIdAndUpdate(fields.userid, obj, function(err) {
+                        if (err) throw err;
+                        console.log("更新成功");
+                        res.json({
+                            status: 200,
+                            message: "成功"
+                        })
+
+                    })
+                    // const userInstance = new user(obj);
+                    // userInstance.save(function(err) {
+                    //     if (err) {
+                    //         res.json({
+                    //             status: 500,
+                    //             message: "失败"
+                    //         })
+                    //     } else {
+                    //         res.json({
+                    //             status: 200,
+                    //             message: "成功"
+                    //         })
+                    //     }
+                    // })
+
+
+
+
+            } else { //
+                res.json({
+                    status: 500,
+                    message: "失败"
+                })
+
+
+
+            }
+        })
 
     })
-
 
 })
 

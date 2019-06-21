@@ -53,7 +53,7 @@
         },
         methods: {
             nashuju() {
-                console.log(this.$store.state.userid)
+
                 this.$axios.post('/api/myinfo', {
                         userid: this.$store.state.userid
                     })
@@ -62,7 +62,7 @@
 
 
                             this.result = res.data.results
-                            console.log(this.result);
+
 
 
                         } else {
@@ -75,30 +75,63 @@
 
             },
             update() {
-                if (this.$refs.image.files[0] == undefined) {
-                    alert("未修改头像")
+
+
+
+                if (this.result.username == "") {
+                    alert("用户名不能为空")
+
+
+                } else if (this.result.password == "") {
+                    alert("密码不能为空")
+
+                } else if (this.result.email == "") {
+                    alert("邮箱不能为空")
+
+                } else if (this.$refs.image.files[0] == undefined) {
+                    console.log("未修改头像");
+                    console.log(this.$store.state.userid);
+                    var datas = new FormData(); //模仿图片提交的形式
+                    datas.append("userid", this.$store.state.userid);
+                    datas.append("username", this.result.username);
+                    datas.append("password", this.result.password);
+                    datas.append("email", this.result.email);
+                    datas.append("pic", this.result.touxiang);
+                    this.$axios.post('/api/myinfo/picnoupdate', datas)
+                        .then(res => {
+
+                            if (res.data.status == 200) {
+                                console.log(res.data);
+                                this.$router.go(-1);
+
+
+                            }
+
+
+
+
+                        })
+
                 } else {
+                    console.log("修改头像了");
+                    console.log(this.$store.state.userid);
                     var data = new FormData(); //模仿图片提交的形式
-                    data.append("userid", this.result.userid);
+                    data.append("userid", this.$store.state.userid);
                     data.append("username", this.result.username);
                     data.append("password", this.result.password);
                     data.append("email", this.result.email);
-
                     data.append("pic", this.$refs.image.files[0]);
 
 
 
-                    this.$axios.post('/api/myinfo/update', {
-                            data: this.data
-                        })
+
+                    this.$axios.post('/api/myinfo/update', data)
                         .then(res => {
 
                             if (res.data.status == 200) {
-                                alert("修改成功");
+                                console.log(res.data);
+                                this.$router.go(-1);
 
-
-                            } else {
-                                console.log("修改失败，请重试");
 
                             }
 

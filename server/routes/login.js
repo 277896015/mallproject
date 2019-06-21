@@ -20,7 +20,7 @@ router.post("/", function(req, res) {
             const token = jwt.sign({ //生成token
                 username: req.body.username //需要加密的数据
             }, config.secret, { //加密签名
-                expiresIn: 30 //过期时间
+                expiresIn: 60 * 10 //过期时间
             })
 
             res.json({

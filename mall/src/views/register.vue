@@ -20,7 +20,7 @@
         </div><br>
         <div>
                 
-      <input type="email" v-model="formData.email"  placeholder="输入邮箱" required="true" class="email">
+      <input type="text" v-model="formData.email"  placeholder="输入邮箱" required="true" class="email">
         </div><br>
 
        
@@ -77,6 +77,7 @@
                     // console.log(this.$refs.image)
                     // console.dir(this.$refs.image)
                     data.append("pic", this.$refs.image.files[0]);
+
 
                     this.$axios.post('/api/register', data)
                         .then(res => {
