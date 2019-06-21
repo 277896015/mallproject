@@ -42,38 +42,46 @@ const router = new Router({
                 myinfoRouter
             ]
         },
-        {
-            path: "/page1",
-            name: "page1",
+        { //商品详情动态路由
+            path: '/index/:id',
+            name: 'itemdetail',
+            props: true,
             component: () =>
-                import ("@/views/page1"),
-            children: [{
-                path: 'detail/:id',
-                name: "detail",
-                props: true,
-                component: () =>
-                    import ('@/views/detail')
-            }],
+                import ('@/views/itemdetail.vue'),
 
-        }, {
-            path: "/page2",
-            name: "page2",
-            meta: {
-                auth: true
-            },
-
-            component: () =>
-                import ("@/views/page2")
-        }, {
-            path: "/page3",
-            name: "page3",
-            meta: {
-                auth: true
-            },
-
-            component: () =>
-                import ("@/views/page3")
         }
+        // {
+        //     path: "/page1",
+        //     name: "page1",
+        //     component: () =>
+        //         import ("@/views/page1"),
+        //     children: [{
+        //         path: 'detail/:id',
+        //         name: "detail",
+        //         props: true,
+        //         component: () =>
+        //             import ('@/views/detail')
+        //     }],
+
+        // }, {
+        //     path: "/page2",
+        //     name: "page2",
+        //     meta: {
+        //         auth: true
+        //     },
+
+        //     component: () =>
+        //         import ("@/views/page2")
+        // }, {
+        //     path: "/page3",
+        //     name: "page3",
+        //     meta: {
+        //         auth: true
+        //     },
+
+        //     component: () =>
+        //         import ("@/views/page3")
+        // }
     ]
 })
 

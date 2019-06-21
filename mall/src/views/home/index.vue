@@ -39,9 +39,9 @@
                   </div>
                 </div>
                
-        <div class="product" v-for="(item,index) in results">
+        <div class="product" v-for="(item,index) in results" >
 <div class="wrs">
-    <div class="productimg"><img :src="'/api'+item.pic" alt=""></div>
+    <div class="productimg" @click.prevent="itemdetail(item)"><img :src="'/api'+item.pic" alt=""></div>
     <div>{{item.title}}</div>
    
     <div>价格{{item.price}}</div>
@@ -108,13 +108,17 @@
             },
             buy: function(shop) {
                 console.log(shop);
+            },
+            itemdetail(item) {
+
+                this.$router.push('/index/' + item._id);
+
+
             }
 
 
-
-        },
-
-    };
+        }
+    }
 </script>
 <style scoped>
     -webkit-scrollbar {
