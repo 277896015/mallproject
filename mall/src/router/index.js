@@ -64,6 +64,13 @@ const router = new Router({
             component: () =>
                 import ('@/views/searchdetail.vue'),
 
+        }, { //消息通知路由
+            path: '/index/notification/list',
+            name: 'notification',
+
+            component: () =>
+                import ('@/views/notification.vue'),
+
         }
         // {
         //     path: "/page1",

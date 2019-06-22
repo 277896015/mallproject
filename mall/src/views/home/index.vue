@@ -7,7 +7,7 @@
                <a @click.prevent="search()"><i class="iconfont icon-xiazai17"></i></a> 
             </form>
             
-            <i class="iconfont icon-xiaoxitongzhi"></i>
+            <i class="iconfont icon-xiaoxitongzhi" @click="tongzhi()"></i>
       </div>
          
       
@@ -109,12 +109,11 @@
                 } else {
                     this.$router.push('/index/search/' + this.searchs);
                 }
+            },
+            tongzhi() {
 
 
-
-
-
-
+                this.$router.push('/index/notification/list');
 
             },
             buy: function(shop) {

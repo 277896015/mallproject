@@ -44,9 +44,11 @@ app.use('/register', require('./routes/register'));
 app.use('/add', require('./routes/add'));
 app.use('/myinfo', require('./routes/myinfo'));
 app.use('/product', require('./routes/product'));
+//客户路由
 app.use('/itemdetail', require('./routes/itemdetail'));
 app.use('/sortdetail', require('./routes/sortdetail'));
 app.use('/searchdetail', require('./routes/searchdetail'));
+app.use('/notification', require('./routes/notification'));
 
 
 
