@@ -58,38 +58,100 @@ router.post("/update", function(req, res) {
 
                 if (result.length) { //查到数据
                     //组装新数据
-                    var obj = {
-                        ...fields,
-                        touxiang: "/" + path.basename(files.pic.path),
-                        password: md5(fields.password)
-                    }
-                    console.log(obj);
-                    user.findByIdAndUpdate(fields.userid, obj, function(err) {
+
+                    if (fields.password == "") {
+
+
+                        console.log("如果没改密码");
+                        var objs = fields;
+                        delete objs.password;
+                        console.log(objs);
+                        var obj = {
+                            ...objs,
+                            touxiang: "/" + path.basename(files.pic.path),
+                        }
+                        console.log(obj);
+                        user.find({ username: fields.username }, function(err, result) {
                             if (err) throw err;
-                            console.log("更新成功");
-                            res.json({
-                                status: 200,
-                                message: "成功"
-                            })
+                            if (result.length) {
+                                if (result[0]._id == fields.userid) {
+                                    user.findByIdAndUpdate(fields.userid, obj, function(err) {
+                                        if (err) throw err;
+                                        console.log("更新成功");
+                                        res.json({
+                                            status: 200,
+                                            message: "成功"
+                                        })
+
+                                    })
+                                } else {
+                                    res.json({
+                                        status: 500,
+                                        message: "用户名重复"
+                                    })
+                                }
+
+                            } else {
+                                user.findByIdAndUpdate(fields.userid, obj, function(err) {
+                                    if (err) throw err;
+                                    console.log("更新成功");
+                                    res.json({
+                                        status: 200,
+                                        message: "成功"
+                                    })
+
+                                })
+                            }
+
 
                         })
-                        // const userInstance = new user(obj);
-                        // userInstance.save(function(err) {
-                        //     if (err) {
-                        //         res.json({
-                        //             status: 500,
-                        //             message: "失败"
-                        //         })
-                        //     } else {
-                        //         res.json({
-                        //             status: 200,
-                        //             message: "成功"
-                        //         })
-                        //     }
-                        // })
+
+                    } else {
+                        console.log("如果改密码");
+                        var objs = fields;
+                        var obj = {
+                            ...objs,
+                            password: md5(fields.password),
+                            touxiang: "/" + path.basename(files.pic.path),
+
+                        }
+                        console.log(obj);
+                        user.find({ username: fields.username }, function(err, result) {
+                            if (err) throw err;
+                            if (result.length) {
+                                if (result[0]._id == fields.userid) {
+                                    user.findByIdAndUpdate(fields.userid, obj, function(err) {
+                                        if (err) throw err;
+                                        console.log("更新成功");
+                                        res.json({
+                                            status: 200,
+                                            message: "成功"
+                                        })
+
+                                    })
+                                } else {
+                                    res.json({
+                                        status: 500,
+                                        message: "用户名重复"
+                                    })
+                                }
+
+                            } else {
+                                user.findByIdAndUpdate(fields.userid, obj, function(err) {
+                                    if (err) throw err;
+                                    console.log("更新成功");
+                                    res.json({
+                                        status: 200,
+                                        message: "成功"
+                                    })
+
+                                })
+                            }
 
 
+                        })
 
+                    }
 
                 } else { //
                     res.json({
@@ -117,46 +179,104 @@ router.post("/picnoupdate", function(req, res) {
         if (err) throw err;
         user.find({
             _id: fields.userid,
-
-
-
         }, function(err, result) {
             if (err) throw err;
 
             if (result.length) { //数据库查到数据
-                var obj = {
-                    ...fields,
 
-                    password: md5(fields.password)
-                }
-                console.log(obj);
-                user.findByIdAndUpdate(fields.userid, obj, function(err) {
+
+                if (fields.password == "") {
+
+
+                    console.log("如果没改密码");
+                    var objs = fields;
+                    delete objs.password;
+
+                    var obj = {
+                        ...objs,
+                    }
+                    console.log(fields.username);
+                    user.find({ username: fields.username }, function(err, result) {
                         if (err) throw err;
-                        console.log("更新成功");
-                        res.json({
-                            status: 200,
-                            message: "成功"
-                        })
+                        if (result.length) {
+                            if (result[0]._id == fields.userid) {
+                                user.findByIdAndUpdate(fields.userid, obj, function(err) {
+                                    if (err) throw err;
+                                    console.log("更新成功");
+                                    res.json({
+                                        status: 200,
+                                        message: "成功"
+                                    })
+
+                                })
+                            } else {
+                                res.json({
+                                    status: 500,
+                                    message: "用户名重复"
+                                })
+                            }
+
+                        } else {
+                            user.findByIdAndUpdate(fields.userid, obj, function(err) {
+                                if (err) throw err;
+                                console.log("更新成功");
+                                res.json({
+                                    status: 200,
+                                    message: "成功"
+                                })
+
+                            })
+                        }
+
 
                     })
-                    // const userInstance = new user(obj);
-                    // userInstance.save(function(err) {
-                    //     if (err) {
-                    //         res.json({
-                    //             status: 500,
-                    //             message: "失败"
-                    //         })
-                    //     } else {
-                    //         res.json({
-                    //             status: 200,
-                    //             message: "成功"
-                    //         })
-                    //     }
-                    // })
+
+                } else {
+                    console.log("如果改密码");
+
+                    var obj = {
+                        ...fields,
+                        password: md5(fields.password)
+                    }
+                    console.log(obj);
+                    user.find({ username: fields.username }, function(err, result) {
+                        if (err) throw err;
+                        if (result.length) {
+                            if (result[0]._id == fields.userid) {
+                                user.findByIdAndUpdate(fields.userid, obj, function(err) {
+                                    if (err) throw err;
+                                    console.log("更新成功");
+                                    res.json({
+                                        status: 200,
+                                        message: "成功"
+                                    })
+
+                                })
+                            } else {
+                                res.json({
+                                    status: 500,
+                                    message: "用户名重复"
+                                })
+                            }
+
+                        } else {
+                            user.findByIdAndUpdate(fields.userid, obj, function(err) {
+                                if (err) throw err;
+                                console.log("更新成功");
+                                res.json({
+                                    status: 200,
+                                    message: "成功"
+                                })
+
+                            })
+                        }
+
+
+                    })
 
 
 
-
+                }
             } else { //
                 res.json({
                     status: 500,

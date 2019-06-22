@@ -8,9 +8,9 @@
                   </mt-header>
                   
                   
-                  <mt-field label="用户名"  v-model="result.username" style="border:solid 1px gray"></mt-field>
-                  <mt-field label="密码"  v-model="result.password" style="border:solid 1px gray"></mt-field>
-                  <mt-field label="邮箱"  v-model="result.email" style="border:solid 1px gray"></mt-field>
+                  <mt-field label="用户名"  v-model="result.username"  placeholder="必填" style="border:solid 1px gray"></mt-field>
+                  <mt-field label="密码"  v-model="result.password"  type="password" placeholder="留空则不修改" style="border:solid 1px gray"></mt-field>
+                  <mt-field label="邮箱"  v-model="result.email" placeholder="必填" style="border:solid 1px gray"></mt-field>
                   
                  
                 <div>
@@ -18,7 +18,7 @@
                   <img :src="'/api' + this.result.touxiang" class="img" alt="">
                   
                 </div>
-                <span>更换头像</span><span><input type="file" ref="image" class="file"></span>
+                <span>可更换头像(不换则保留头像)</span><span><input type="file" ref="image" class="file"></span>
 
 
 
@@ -61,7 +61,8 @@
                         if (res.data.status == 200) {
 
 
-                            this.result = res.data.results
+                            this.result = res.data.results;
+                            this.result.password = "";
 
 
 
@@ -75,71 +76,132 @@
 
             },
             update() {
-
-
-
                 if (this.result.username == "") {
                     alert("用户名不能为空")
-
-
-                } else if (this.result.password == "") {
-                    alert("密码不能为空")
-
                 } else if (this.result.email == "") {
                     alert("邮箱不能为空")
-
-                } else if (this.$refs.image.files[0] == undefined) {
-                    console.log("未修改头像");
-                    console.log(this.$store.state.userid);
-                    var datas = new FormData(); //模仿图片提交的形式
-                    datas.append("userid", this.$store.state.userid);
-                    datas.append("username", this.result.username);
-                    datas.append("password", this.result.password);
-                    datas.append("email", this.result.email);
-                    datas.append("pic", this.result.touxiang);
-                    this.$axios.post('/api/myinfo/picnoupdate', datas)
-                        .then(res => {
-
-                            if (res.data.status == 200) {
-                                console.log(res.data);
-                                this.$router.go(-1);
-
-
-                            }
-
-
-
-
-                        })
-
                 } else {
-                    console.log("修改头像了");
-                    console.log(this.$store.state.userid);
-                    var data = new FormData(); //模仿图片提交的形式
-                    data.append("userid", this.$store.state.userid);
-                    data.append("username", this.result.username);
-                    data.append("password", this.result.password);
-                    data.append("email", this.result.email);
-                    data.append("pic", this.$refs.image.files[0]);
+
+                    if (this.$refs.image.files[0] == undefined) {
+                        //如果不更新图片
+                        var data = new FormData();
+                        data.append("userid", this.$store.state.userid);
+                        data.append("username", this.result.username);
+                        data.append("password", this.result.password);
+                        data.append("email", this.result.email);
+                        this.$axios.post('/api/myinfo/picnoupdate', data)
+                            .then(res => {
+
+                                if (res.data.status == 200) {
+                                    console.log(res.data);
+                                    this.$router.go(-1);
+                                } else {
+                                    alert(res.data.message)
+
+                                }
+                            })
+                    } else { //更新图片
+                        console.log("修改头像了");
+                        console.log(this.$store.state.userid);
+                        var data = new FormData(); //模仿图片提交的形式
+                        data.append("userid", this.$store.state.userid);
+                        data.append("username", this.result.username);
+                        data.append("password", this.result.password);
+                        data.append("email", this.result.email);
+                        data.append("pic", this.$refs.image.files[0]);
 
 
 
 
-                    this.$axios.post('/api/myinfo/update', data)
-                        .then(res => {
+                        this.$axios.post('/api/myinfo/update', data)
+                            .then(res => {
 
-                            if (res.data.status == 200) {
-                                console.log(res.data);
-                                this.$router.go(-1);
+                                if (res.data.status == 200) {
+                                    console.log(res.data);
+                                    this.$router.go(-1);
+                                } else {
+                                    alert(res.data.message)
 
-
-                            }
-
-
-
-
-                        })
+                                }
+                            })
+                    }
                 }
+                // if (this.result.username == "" && this.$refs.image.files[0] == undefined) {
+                //     alert("用户名未修改")
+
+                //     console.log("未修改头像");
+                //     console.log(this.$store.state.userid);
+                //     var datas = new FormData(); //模仿图片提交的形式
+                //     datas.append("userid", this.$store.state.userid);
+                //     datas.append("email", this.result.email);
+                //     datas.append("pic", this.result.touxiang);
+                //     this.$axios.post('/api/myinfo/picnoupdate', datas)
+                //         .then(res => {
+
+                //             if (res.data.status == 200) {
+                //                 console.log(res.data);
+                //                 this.$router.go(-1);
+
+
+                //             }
+
+
+
+
+                //         })
+
+
+                // } else if (this.result.password == "" && this.$refs.image.files[0] == undefined) {
+                //     alert("密码未修改")
+                //     console.log("未修改头像");
+                //     console.log(this.$store.state.userid);
+                //     var datas = new FormData(); //模仿图片提交的形式
+                //     datas.append("userid", this.$store.state.userid);
+                //     datas.append("username", this.result.username);
+
+                //     datas.append("email", this.result.email);
+                //     datas.append("pic", this.result.touxiang);
+                //     this.$axios.post('/api/myinfo/picnoupdate', datas)
+                //         .then(res => {
+
+                //             if (res.data.status == 200) {
+                //                 console.log(res.data);
+                //                 this.$router.go(-1);
+
+
+                //             }
+
+
+
+
+                //         })
+
+                // }  else if (this.$refs.image.files[0] == undefined) {
+                //     console.log("未修改头像");
+                //     console.log(this.$store.state.userid);
+                //     var datas = new FormData(); //模仿图片提交的形式
+                //     datas.append("userid", this.$store.state.userid);
+                //     datas.append("username", this.result.username);
+                //     datas.append("password", this.result.password);
+                //     datas.append("email", this.result.email);
+                //     datas.append("pic", this.result.touxiang);
+                //     this.$axios.post('/api/myinfo/picnoupdate', datas)
+                //         .then(res => {
+
+                //             if (res.data.status == 200) {
+                //                 console.log(res.data);
+                //                 this.$router.go(-1);
+
+
+                //             }
+
+
+
+
+                //         })
+
+                // }
+
 
             },
 
@@ -147,24 +209,8 @@
                 this.$router.go(-1)
             }
 
-        },
-        // beforeRouteEnter(to, from, next) {
-        //     console.log("组件进入守卫");
-        //     next()
-        //         // ...
-        // }
+        }
 
-        // beforeRouteUpdate(to, from, next) {
-        //     this.find(userid);
-        //     console.log("组件更新守卫");
-        //     next()
-
-        // },
-        // beforeRouteLeave(to, from, next) {
-        //     // ...
-        //     console.log("组件离开守卫");
-        //     next();
-        // }
     };
 </script>
 <style scoped>

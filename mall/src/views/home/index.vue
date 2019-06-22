@@ -3,8 +3,8 @@
       <div class="wr">
             <p>B2C在线商城</p>
             <form action="">
-                <input type="text" ref="searchs">
-               <a v-on:click="tijiao"><i class="iconfont icon-xiazai17"></i></a> 
+                <input type="text" v-model="searchs" placeholder="名称、分类、描述" >
+               <a @click.prevent="search()"><i class="iconfont icon-xiazai17"></i></a> 
             </form>
             
             <i class="iconfont icon-xiaoxitongzhi"></i>
@@ -24,16 +24,16 @@
             </div>
             <div class="fenlei">
                   <div class="wrflex">
-                        <div  class="sort1" >
+                        <div  class="sort1" @click.prevent="sortdetail('手机')">
                             手机
                            </div>
-                           <div class="sort2" >
+                           <div class="sort2" @click.prevent="sortdetail('耳机')">
                              耳机
                               </div>
-                              <div class="sort3"  >
+                              <div class="sort3"  @click.prevent="sortdetail('配件')">
                                 配件
                                  </div>
-                                 <div  class="sort4">
+                                 <div  class="sort4" @click.prevent="sortdetail('生活')">
                                        生活
                                         </div>
                   </div>
@@ -86,7 +86,8 @@
         data() {
             return {
                 results: "",
-                msg: "vuex购物车"
+                msg: "vuex购物车",
+                searchs: ""
             };
         },
         computed: {
@@ -96,14 +97,24 @@
             ...mapActions(['addToCart']),
 
             init() {
-                this.$axios.get('/api/add/list').then(res => {
+                this.$axios.get('/api/itemdetail/list').then(res => {
                     console.log(res.data)
                     this.results = res.data.results;
                 })
 
             },
-            tijiao: function() {
-                alert(this.$refs.searchs.value);
+            search() {
+                if (this.searchs == "") {
+                    alert("请先输入内容再搜索");
+                } else {
+                    this.$router.push('/index/search/' + this.searchs);
+                }
+
+
+
+
+
+
 
             },
             buy: function(shop) {
@@ -114,7 +125,14 @@
                 this.$router.push('/index/' + item._id);
 
 
-            }
+            },
+            sortdetail(name) {
+
+                this.$router.push('/index/sort/' + name);
+
+
+            },
+
 
 
         }

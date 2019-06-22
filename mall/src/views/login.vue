@@ -61,24 +61,13 @@
 
 
                             } else {
-                                alert("登录失败，请重新登录");
+                                alert(res.data.message);
                             }
 
 
                         })
                 }
 
-                // this.$axios.post('/api/login', this.formData)
-                //     .then(res => {
-                //         console.log(res.data)
-                //             //保存token
-                //         this.$store.commit("saveToken", res.data.token);
-                //         this.$router.push('/index/home');
-                //         // console.log(this.$route.query)
-                //         if (this.$route.query.redirect) {
-                //             this.$router.push(this.$route.query.redirect);
-                //         }
-                //     })
             },
             gotoregister() {
                 this.$router.push('register');

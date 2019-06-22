@@ -4,43 +4,37 @@ const product = require('../models/product');
 
 const path = require('path');
 
-
-router.get('/list', function(req, res) {
-    //获取数据库数据
-    product.find({}, function(err, results) {
-        if (err) throw err;
-        //res.render('list', { arr: results })
-        res.json({
-            status: 200,
-            results: results,
-        })
-    })
-})
-
 router.get("/", function(req, res) {
-    console.log("拿到id" + req.query.id)
-    console.log("进入商品详情路由")
+    console.log("进入查询详情路由")
+    console.log("拿到id:" + req.query.id)
+
+    console.log("进入查询详情路由")
 
 
     //数据库匹配数据
 
     product.find({
-        _id: req.query.id
+        $or: [ //多条件，数组形式  同时模糊搜索名字或分类或描述
+            { title: new RegExp(req.query.id) },
+            { sorts: new RegExp(req.query.id) },
+            { description: new RegExp(req.query.id) }
+
+        ]
     }, function(err, results) {
         if (err) throw err;
         console.log(req.query.id)
         if (results.length) { //匹配成功
-            console.log('找到了商品');
+            console.log('找到了');
             res.json({
                 status: 200,
-                results: results[0],
+                results: results,
             })
 
         } else {
-            console.log("找不到此商品");
+            console.log("找不到");
             res.json({
                 status: 500,
-                message: "商品不存在"
+                message: "搜索结果不存在"
             })
 
         }

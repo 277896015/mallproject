@@ -56,6 +56,10 @@
         },
         methods: {
             send() {
+                var regEmail = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
+
+                var regUsername = /^[a-zA-Z0-9_]{3,16}$/;
+
 
                 if (this.$refs.image.files[0] == undefined) {
                     alert("必须上传头像");
@@ -68,6 +72,12 @@
                 } else if (this.formData.email == "") {
                     alert("邮箱不能为空");
 
+                } else if ((regEmail.test(this.formData.email)) == false) {
+                    alert("邮箱格式错误")
+                        // alert(this.form.email)
+                } else if ((regUsername.test(this.formData.username)) == false) {
+                    alert("用户名需要是3至16位英文")
+                        // alert(this.form.email)
                 } else {
                     var data = new FormData(); //模仿图片提交的形式
                     data.append("username", this.formData.username);

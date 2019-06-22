@@ -1,10 +1,10 @@
 <template>
   <div>
-      <mt-header title="商品信息">
+      <mt-header :title="results.title">
           <router-link to="/" slot="left">
             <mt-button icon="back" @click.prevent="back()">返回</mt-button>
           </router-link>
-          <mt-button icon="more" slot="right"></mt-button>
+          
         </mt-header>
   <div>商品名字：{{results.title}}</div>
    

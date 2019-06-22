@@ -49,6 +49,21 @@ const router = new Router({
             component: () =>
                 import ('@/views/itemdetail.vue'),
 
+        }, { //分类详情动态路由
+            path: '/index/sort/:id',
+            name: 'sortdetail',
+            props: true,
+            component: () =>
+                import ('@/views/sortdetail.vue'),
+
+        },
+        { //查询详情动态路由
+            path: '/index/search/:id',
+            name: 'searchdetail',
+            props: true,
+            component: () =>
+                import ('@/views/searchdetail.vue'),
+
         }
         // {
         //     path: "/page1",
