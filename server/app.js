@@ -41,14 +41,18 @@ app.all('*', function(req, res, next) {
 //路由配置
 app.use('/login', require('./routes/login'));
 app.use('/register', require('./routes/register'));
+app.use('/forget', require('./routes/forget'));
 app.use('/add', require('./routes/add'));
+
 app.use('/myinfo', require('./routes/myinfo'));
 app.use('/product', require('./routes/product'));
 //客户路由
 app.use('/itemdetail', require('./routes/itemdetail'));
+app.use('/address', require('./routes/address'));
 app.use('/sortdetail', require('./routes/sortdetail'));
 app.use('/searchdetail', require('./routes/searchdetail'));
 app.use('/notification', require('./routes/notification'));
+app.use('/collect', require('./routes/collect'));
 
 
 

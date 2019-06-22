@@ -5,6 +5,8 @@ const user = new Schema({
     username: String,
     password: String,
     email: String,
+    registercode: String,
+    admin: { type: Number, default: 0 },
     touxiang: String
 })
 

@@ -38,7 +38,7 @@
 </template>
 <script>
     export default {
-        name: "sortdetail",
+        name: "searchdetail",
         props: ["id"],
         data() {
             return {
@@ -82,7 +82,7 @@
             },
             itemdetail(item) {
 
-                this.$router.push('/index/' + item._id);
+                this.$router.push('/index/itemdetail/' + item._id);
 
 
             },

@@ -1,23 +1,23 @@
 <template>
     <div class="content">
-            <div class="title">
-                    <h2>登录页面</h2>
-              </div>
+            
 
     
     <div class="biaodan">
 
         
         <form>
-            账号：<input type="text" v-model="formData.username" placeholder="输入账号" class="username"><br>
-            密码：<input type="password" v-model="formData.password" placeholder="输入密码" class="password" autocomplete><br>
-            <button @click.prevent="send()" class="button">登陆</button>
+               
+            收货人姓名：<input type="text" v-model="formData.shrname" placeholder="输入姓名" class="username"><br>
+            电话：<input type="text" v-model="formData.phone" placeholder="输入电话" class="password" ><br>
+            地址：<input type="text" v-model="formData.dizhi" placeholder="输入地址" class="password"><br>
+            <button @click.prevent="send()" class="button">确定</button>
 
         </form>
-        <button @click.prevent="gotoregister()" class="button">去注册</button>
+        <button @click.prevent="back()" class="button1">取消</button>
         
 <br>
-        <button @click.prevent="goforget()"  class="goforget">忘记密码？点击找回</button>
+
     </div>
     
 
@@ -26,12 +26,15 @@
 </template>
 <script>
     export default {
-        name: "login",
+        name: "newaddress",
         data() {
             return {
                 formData: {
-                    username: "",
-                    password: ""
+
+                    shrid: this.$store.state.userid,
+                    shrname: "",
+                    phone: "",
+                    dizhi: ""
                 }
             }
         },
@@ -39,28 +42,21 @@
 
             send() {
 
-                if (this.formData.username == "") {
-                    alert("用户名不能为空");
-                } else if (this.formData.password == "") {
-                    alert("密码不能为空");
+                if (this.formData.shrname == "") {
+                    alert("姓名不能为空");
+                } else if (this.formData.phone == "") {
+                    alert("电话不能为空");
+
+                } else if (this.formData.dizhi == "") {
+                    alert("地址不能为空");
 
                 } else {
-                    this.$axios.post('/api/login', this.formData)
+                    console.log(this.formData.shrid)
+                    this.$axios.post('/api/address', this.formData)
                         .then(res => {
                             if (res.data.status == 200) {
-                                this.$store.commit("saveToken", res.data.token);
-                                this.$store.commit("saveUserid", res.data.userid);
-
-
-                                alert("登录成功");
-
-                                // console.log(this.$route.query)
-                                if (this.$route.query.redirect) {
-                                    this.$router.push(this.$route.query.redirect);
-                                }
-                                this.$router.push('/index/home');
-
-
+                                alert(res.data.message);
+                                this.$router.go(-1);
                             } else {
                                 alert(res.data.message);
                             }
@@ -70,11 +66,9 @@
                 }
 
             },
-            gotoregister() {
-                this.$router.push('register');
-            },
-            goforget() {
-                this.$router.push('forget');
+
+            back() {
+                this.$router.go(-1);
             },
 
 
@@ -127,6 +121,19 @@
     
     .button {
         background-color: skyblue;
+        /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 3vw;
+        margin-top: 2vh;
+    }
+    
+    .button1 {
+        background-color: red;
         /* Green */
         border: none;
         color: white;

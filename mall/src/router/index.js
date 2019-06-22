@@ -26,6 +26,12 @@ const router = new Router({
                 import ("@/views/login")
         },
         {
+            path: "/forget",
+            name: "forget",
+            component: () =>
+                import ("@/views/forget")
+        },
+        {
             path: '/',
             redirect: "/index/home"
         }, {
@@ -43,7 +49,7 @@ const router = new Router({
             ]
         },
         { //商品详情动态路由
-            path: '/index/:id',
+            path: '/index/itemdetail/:id',
             name: 'itemdetail',
             props: true,
             component: () =>
@@ -71,7 +77,35 @@ const router = new Router({
             component: () =>
                 import ('@/views/notification.vue'),
 
-        }
+        }, { //收获地址路由
+            path: '/index/addresslist',
+            name: 'addresslist',
+
+            component: () =>
+                import ('@/views/addresslist.vue'),
+
+        }, { //新增收获地址路由
+            path: '/index/newaddress',
+            name: 'newaddress',
+
+            component: () =>
+                import ('@/views/newaddress.vue'),
+
+        }, { //修改地址动态路由
+            path: '/index/updateaddress/:id',
+            name: 'updateaddress',
+            props: true,
+            component: () =>
+                import ('@/views/updateaddress.vue'),
+
+        }, { //收藏列表路由
+            path: '/index/collect/list',
+            name: 'collect',
+
+            component: () =>
+                import ('@/views/collect.vue'),
+
+        },
         // {
         //     path: "/page1",
         //     name: "page1",

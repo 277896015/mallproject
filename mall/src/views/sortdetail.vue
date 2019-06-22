@@ -81,7 +81,7 @@
             },
             itemdetail(item) {
 
-                this.$router.push('/index/' + item._id);
+                this.$router.push('/index/itemdetail/' + item._id);
 
 
             },

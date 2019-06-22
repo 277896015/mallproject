@@ -20,7 +20,11 @@
         </div><br>
         <div>
                 
-      <input type="text" v-model="formData.email"  placeholder="输入邮箱" required="true" class="email">
+                <input type="text" v-model="formData.registercode" required="true" placeholder="输入注册码(找回密码用)" class="password" autocomplete >
+        </div><br>
+        <div>
+                
+      
         </div><br>
 
        
@@ -33,6 +37,7 @@
         
       <button @click.prevent="send()" class="button">注册</button>
     </form>
+    <button @click.prevent="back()" class="button1">返回登录</button>
 
 </div>
 
@@ -50,38 +55,37 @@
                 formData: {
                     username: "",
                     password: "",
-                    email: ""
+                    email: "",
+                    registercode: ""
                 }
             };
         },
         methods: {
             send() {
-                var regEmail = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
+
 
                 var regUsername = /^[a-zA-Z0-9_]{3,16}$/;
 
 
-                if (this.$refs.image.files[0] == undefined) {
-                    alert("必须上传头像");
-                } else if (this.formData.username == "") {
+                if (this.formData.username == "") {
                     alert("用户名不能为空");
+
+                } else if ((regUsername.test(this.formData.username)) == false) {
+                    alert("用户名需要是3至16位英文")
 
                 } else if (this.formData.password == "") {
                     alert("密码不能为空");
 
-                } else if (this.formData.email == "") {
-                    alert("邮箱不能为空");
+                } else if (this.formData.registercode == "") {
+                    alert("注册码不能为空");
 
-                } else if ((regEmail.test(this.formData.email)) == false) {
-                    alert("邮箱格式错误")
-                        // alert(this.form.email)
-                } else if ((regUsername.test(this.formData.username)) == false) {
-                    alert("用户名需要是3至16位英文")
-                        // alert(this.form.email)
+                } else if (this.$refs.image.files[0] == undefined) {
+                    alert("必须上传头像");
                 } else {
                     var data = new FormData(); //模仿图片提交的形式
                     data.append("username", this.formData.username);
                     data.append("password", this.formData.password);
+                    data.append("registercode", this.formData.registercode);
                     data.append("email", this.formData.email);
                     //图片的数据怎么拿
                     // console.log(this.$refs.image)
@@ -112,6 +116,9 @@
 
 
 
+            },
+            back() {
+                this.$router.push('/login');
             }
 
 
@@ -137,6 +144,7 @@
     
     .biaodan {
         padding: 10vw;
+        text-align: center;
     }
     
     .username {
@@ -165,5 +173,25 @@
         text-decoration: none;
         display: inline-block;
         font-size: 3vw;
+    }
+    
+    .button1 {
+        background-color: green;
+        /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 3vw;
+        margin-top: 2vh;
+    }
+    
+    form input {
+        margin-top: 2vh;
+    }
+    
+    form {
+        font-size: 150%;
     }
 </style>

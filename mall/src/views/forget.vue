@@ -1,7 +1,7 @@
 <template>
     <div class="content">
             <div class="title">
-                    <h2>登录页面</h2>
+                    <h2>找回密码页面</h2>
               </div>
 
     
@@ -10,28 +10,30 @@
         
         <form>
             账号：<input type="text" v-model="formData.username" placeholder="输入账号" class="username"><br>
-            密码：<input type="password" v-model="formData.password" placeholder="输入密码" class="password" autocomplete><br>
-            <button @click.prevent="send()" class="button">登陆</button>
+            注册码：<input type="text" v-model="formData.registercode" placeholder="注册时填的注册码" class="password" autocomplete><br>
+            新密码：<input type="password" v-model="formData.password" placeholder="输入新密码" class="password" autocomplete><br>
+            <button @click.prevent="send()" class="button">点击找回</button>
 
         </form>
-        <button @click.prevent="gotoregister()" class="button">去注册</button>
+        <button @click.prevent="back()" class="button1">返回登陆</button>
+       
         
-<br>
-        <button @click.prevent="goforget()"  class="goforget">忘记密码？点击找回</button>
-    </div>
-    
 
+        
+    </div>
+    <br>
 </div>
 
 </template>
 <script>
     export default {
-        name: "login",
+        name: "forget",
         data() {
             return {
                 formData: {
                     username: "",
-                    password: ""
+                    password: "",
+                    registercode: ""
                 }
             }
         },
@@ -44,23 +46,15 @@
                 } else if (this.formData.password == "") {
                     alert("密码不能为空");
 
+                } else if (this.formData.registercode == "") {
+                    alert("注册码不能为空");
+
                 } else {
-                    this.$axios.post('/api/login', this.formData)
+                    this.$axios.post('/api/forget', this.formData)
                         .then(res => {
                             if (res.data.status == 200) {
-                                this.$store.commit("saveToken", res.data.token);
-                                this.$store.commit("saveUserid", res.data.userid);
-
-
-                                alert("登录成功");
-
-                                // console.log(this.$route.query)
-                                if (this.$route.query.redirect) {
-                                    this.$router.push(this.$route.query.redirect);
-                                }
-                                this.$router.push('/index/home');
-
-
+                                alert(res.data.message);
+                                this.$router.push('/login');
                             } else {
                                 alert(res.data.message);
                             }
@@ -70,17 +64,9 @@
                 }
 
             },
-            gotoregister() {
-                this.$router.push('register');
+            back() {
+                this.$router.go(-1);
             },
-            goforget() {
-                this.$router.push('forget');
-            },
-
-
-
-
-
         }
     }
 </script>
@@ -102,7 +88,6 @@
     
     .biaodan {
         padding: 10vw;
-        text-align: center;
     }
     
     .username {
@@ -111,10 +96,6 @@
     
     .password {
         border: 1px solid black;
-    }
-    
-    .goforget {
-        margin-top: 2vh;
     }
     
     .email {
@@ -127,6 +108,19 @@
     
     .button {
         background-color: skyblue;
+        /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 3vw;
+        margin-top: 2vh;
+    }
+    
+    .button1 {
+        background-color: goldenrod;
         /* Green */
         border: none;
         color: white;

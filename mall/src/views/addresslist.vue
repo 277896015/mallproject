@@ -3,42 +3,37 @@
       <div class="wr">
 
       
-      <mt-header  fixed title="消息通知" >
+      <mt-header  fixed title="收货地址" >
           <router-link to="/" slot="left">
             <mt-button icon="back" @click.prevent="back()">返回</mt-button>
           </router-link>
-          
+          <mt-button  @click.prevent="addaddress()"  slot="right">新增</mt-button>
         </mt-header>
+        
     </div>
+    
     <div class="wrapper">
         <section>
         <div class="product" v-for="(item,index) in results" >
            <ul>
             <mt-badge size="small"type="warning">{{index+1}}</mt-badge>
                <li>
-                标题:{{item.biaoti}}
+                收货人:{{item.shrname}}
                </li>
                <li>
-                内容:{{item.content}}
+                电话:{{item.phone}}
                </li>
                <li>
-                状态:{{item.read}}
+                地址:{{item.dizhi}}
                </li>
-               <mt-button size="small" type="primary" @click.prevent="know(item)">了解</mt-button>
+               
            </ul>
-                
-                
-                
-                <!-- <td>
-                    <div @click='addToCart(item)' class="btn">加入购物车</div><br>
-                    <div @click='buy(shop)' class="btn">立即购买</div>
-                    
-                </td> -->
-                
-            
-                    
-            
-                    </div>
+           <div class="flex">
+                <button @click.prevent="updateaddress(item)">编辑</button>
+                <button @click.prevent="deleted(item)">删除</button>
+           </div>
+           
+         </div>
                 </section>
 </div>
 
@@ -46,10 +41,11 @@
 </template>
 <script>
     export default {
-        name: "notification",
+        name: "addresslist",
 
         data() {
             return {
+                id: this.$store.state.userid,
                 results: "",
 
 
@@ -63,20 +59,25 @@
         methods: {
 
             getitem() {
-                this.$axios.get('/api/notification').then(res => {
+                this.$axios.get('/api/address?id=' + this.id).then(res => {
                     if (res.data.status == 200) {
                         this.results = res.data.results;
                     } else {
                         alert(res.data.message);
-                        this.$router.go(-1);
+
                     }
 
 
                 })
 
             },
-            know(item) {
-                this.$axios.get('/api/notification/know?id=' + item._id).then(res => {
+            addaddress() {
+                this.$router.push('/index/newaddress');
+
+
+            },
+            deleted(item) {
+                this.$axios.get('/api/address/deleted/?id=' + item._id).then(res => {
                     if (res.data.status == 200) {
                         alert(res.data.message);
                         this.getitem();
@@ -88,6 +89,21 @@
 
 
                 })
+
+            },
+            updateaddress(item) {
+                this.$router.push('/index/updateaddress/' + item._id);
+                // this.$axios.get('/api/address/updateaddress/?id=' + item._id).then(res => {
+                //     if (res.data.status == 200) {
+                //         alert(res.data.message);
+                //         this.getitem();
+                //     } else {
+                //         alert(res.data.message);
+
+                //     }
+
+
+                // })
 
             },
 
@@ -136,5 +152,10 @@
     ul {
         margin-top: 1vh;
         text-align: center;
+    }
+    
+    .flex {
+        display: flex;
+        justify-content: space-around;
     }
 </style>
