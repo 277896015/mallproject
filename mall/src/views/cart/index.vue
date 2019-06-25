@@ -1,6 +1,13 @@
 <template>
 <div>
     <div class="carts">
+            <mt-header fixed title="购物车">
+                    <router-link to="/" slot="left">
+                      <mt-button icon="back" @click.prevent="back()">返回</mt-button>
+                    </router-link>
+                    <mt-button icon="more" slot="right"></mt-button>
+                  </mt-header>
+                  <div class="kbc">111 </div>
         <section> 
             <div class="product" v-for='(shop,index) in $store.state.cartlist'>
                 <div class="wrs" >
@@ -10,10 +17,12 @@
 <div>{{shop.title}}</div>
 <div>价格{{shop.price}}</div>
 邮费{{shop.fee || ''}}
+<br>
+数量{{shop.num || ''}}
  <td>   
-        <span @click='add_db(shop)' class="btnadd">+</span>
-        <span @click='desc_db(shop)' class="btndesc">-</span>
-        <span @click='delete_db(shop)' class="btn">删除</span>
+        <span @click.prevent='additem(shop)' class="btnadd">+</span>
+        <span @click.prevent='descitem(shop)' class="btndesc">-</span>
+        <span @click.prevent='deleteitem(shop)' class="btn">删除</span>
  </td>
                 </div>                 
             </div>
@@ -22,16 +31,25 @@
 </div>
 </template>
 <script>
-    import {
-
-
-        mapActions
-    } from "vuex"
     export default {
         name: 'cart',
         computed: {
 
+        },
+        methods: {
+            additem(shop) {
+                this.$store.commit("additem", shop);
+            },
+            descitem(shop) {
+                this.$store.commit("descitem", shop);
+            },
+            deleteitem(shop) {
+                this.$store.commit("deleteitem", shop);
+            },
+            back() {
+                this.$router.push('/index/home');
 
+            }
         },
         data() {
             return {
@@ -42,6 +60,12 @@
     }
 </script>
 <style scoped>
+    .kbc {
+        width: 100vw;
+        height: 6vh;
+        display: block;
+    }
+    
     .btnadd {
         display: inline-block;
         width: 10vw;
@@ -76,7 +100,7 @@
     
     .carts {
         width: 100vw;
-        height: 80vh;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         /* column：主轴为垂直方向，起点在上沿。行布局 */

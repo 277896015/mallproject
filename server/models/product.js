@@ -7,7 +7,8 @@ const productSchema = new Schema({
     price: Number,
     fee: Number,
     description: String,
-    sorts: String
+    sorts: String,
+    num: { type: Number, default: 1 },
 
 });
 

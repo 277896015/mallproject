@@ -72,10 +72,6 @@
 </div>
 </template>
 <script>
-    import {
-
-        mapActions
-    } from 'vuex'
     export default {
         name: "home",
         created() {
@@ -94,7 +90,9 @@
 
         },
         methods: {
-            ...mapActions(['addToCart']),
+            addToCart(item) {
+                this.$store.commit("addToCart", item);
+            },
 
             init() {
                 this.$axios.get('/api/itemdetail/list').then(res => {

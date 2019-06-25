@@ -53,6 +53,9 @@
 
         },
         methods: {
+            addToCart(item) {
+                this.$store.commit("addToCart", item);
+            },
             con() {
                 console.log("第一种方法")
                 console.log(this.id)
