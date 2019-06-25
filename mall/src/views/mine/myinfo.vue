@@ -110,9 +110,6 @@
                         data.append("email", this.result.email);
                         data.append("pic", this.$refs.image.files[0]);
 
-
-
-
                         this.$axios.post('/api/myinfo/update', data)
                             .then(res => {
 

@@ -105,6 +105,13 @@ const router = new Router({
             component: () =>
                 import ('@/views/collect.vue'),
 
+        }, { //确认订单路由
+            path: '/index/orderpage',
+            name: 'orderpage',
+
+            component: () =>
+                import ('@/views/orderpage.vue'),
+
         },
         // {
         //     path: "/page1",

@@ -5,7 +5,7 @@
                     <router-link to="/" slot="left">
                       <mt-button icon="back" @click.prevent="back()">返回</mt-button>
                     </router-link>
-                    <mt-button icon="more" slot="right"></mt-button>
+                    <mt-button  slot="right" @click.prevent="goorder()">去结算</mt-button>
                   </mt-header>
                   <div class="kbc">111 </div>
         <section> 
@@ -45,6 +45,9 @@
             },
             deleteitem(shop) {
                 this.$store.commit("deleteitem", shop);
+            },
+            goorder() {
+                this.$router.push('/index/orderpage');
             },
             back() {
                 this.$router.push('/index/home');
