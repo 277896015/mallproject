@@ -91,7 +91,14 @@
         },
         methods: {
             addToCart(item) {
-                this.$store.commit("addToCart", item);
+                if (this.$store.state.userid == "") {
+                    alert("未登录请先登录")
+                    this.$router.push('/login');
+                } else {
+                    this.$store.commit("addToCart", item);
+                }
+
+
             },
 
             init() {
@@ -115,7 +122,13 @@
 
             },
             buy(item) {
-                this.$router.push('/index/buynowpage/' + item._id);
+                if (this.$store.state.userid == "") {
+                    alert("未登录请先登录")
+                    this.$router.push('/login');
+                } else {
+                    this.$router.push('/index/buynowpage/' + item._id);
+                }
+
             },
             itemdetail(item) {
 

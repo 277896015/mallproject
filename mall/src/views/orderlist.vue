@@ -53,16 +53,22 @@
         },
         methods: {
             getitem() {
-                this.$axios.get('/api/orderpage?id=' + this.id).then(res => {
-                    if (res.data.status == 200) {
-                        this.result = res.data.results;
-                    } else {
-                        alert(res.data.message);
+                if (this.$store.state.userid == "") {
+                    alert("未登录请先登录")
+                    this.$router.push('/login');
+                } else {
+                    this.$axios.get('/api/orderpage?id=' + this.id).then(res => {
+                        if (res.data.status == 200) {
+                            this.result = res.data.results;
+                        } else {
+                            alert(res.data.message);
 
-                    }
+                        }
 
 
-                })
+                    })
+                }
+
 
             },
             shanchu(shop) {

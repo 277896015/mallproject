@@ -24,10 +24,10 @@
 
     <div class="wrapper">
         <section>
-                <div class="product" v-for='(shop,index) in $store.state.cartlist'>
+                <div class="product" v-for='(shop,index) in results'>
                         
          
-                {{index+1}}
+             
          {{shop.title}}
         数量:{{shop.num}}
          运费:{{shop.fee}}
@@ -51,33 +51,32 @@
         data() {
             return {
                 userid: this.$store.state.userid,
-                results: [],
+                results: "",
                 result: "",
                 totalMoney: 0,
-                dingdandizhi: {},
                 selectedd: ""
-
-
-
             }
         },
         mounted() {
-
+            this.jiaoyan();
             this.getproduct();
-            this.zongjia();
-
-
-
-
-
+            this.getaddress();
         },
         methods: {
-            getitem() {
+            jiaoyan() {
+                if (this.$store.state.userid == "") {
+                    alert("未登录请先登录")
+                    this.$router.push('/login');
+                }
+            },
+            getaddress() {
                 this.$axios.get('/api/address?id=' + this.$store.state.userid).then(res => {
                     if (res.data.status == 200) {
                         this.result = res.data.results;
                     } else {
                         alert(res.data.message);
+                        this.$router.push('/index/addresslist');
+
 
                     }
 
@@ -86,72 +85,52 @@
 
             },
             getproduct() {
-                this.$axios.get('/api/itemdetail?id=' + this.$route.params.id)
+                this.$axios.get('/api/itemdetail/buy?id=' + this.$route.params.id)
                     .then(res => {
                         if (res.data.status == 200) {
 
 
-                            this.results.push(res.data.results);
-                            console.log(this.results);
-
-
+                            this.results = res.data.results;
+                            this.totalMoney = this.results[0].price + this.results[0].fee;
 
                         } else {
-                            console.log(res)
+                            console.log(res.data.message)
                                 //this.$router.push('/index/home');
                         }
-
-
                     })
 
             },
+
             queding() {
+                if (this.selectedd == "") {
+                    alert("请选择收货地址")
+                } else {
+                    var obj = {
+                        xiadanrenid: this.$store.state.userid,
+                        shangpin: this.results,
+                        shouhuodizhi: this.selectedd,
+                        totalMoney: this.totalMoney
+                    }
 
-                var obj = {
-                    xiadanrenid: this.$store.state.userid,
-                    shangpin: this.results,
-                    shouhuodizhi: this.selectedd,
-                    totalMoney: this.totalMoney
+                    this.$axios.post('/api/orderpage', obj)
+                        .then(res => {
+                            if (res.data.status == 200) {
+                                alert(res.data.message);
+
+                                this.$router.push('/index/home');
+
+                            } else {
+                                alert(res.data.message);
+                            }
+
+
+                        })
                 }
-                console.log(obj)
-                this.$axios.post('/api/orderpage', obj)
-                    .then(res => {
-                        if (res.data.status == 200) {
-                            alert(res.data.message);
-                            this.$store.commit("cleancart");
-                            this.$router.push('/index/home');
-
-                        } else {
-                            alert(res.data.message);
-                        }
-
-
-                    })
 
             },
-
-
-            　　
-
-
-
-
-
-
-
-
             back() {
                 this.$router.go(-1);
             },
-            zongjia() {
-
-                this.$store.state.cartlist.forEach((item, index) => { //遍历商品，如果选中就进行加个计算，然后累加
-
-                    this.totalMoney += (item.price * item.num) + item.fee; //累加的
-
-                });
-            },
-
 
         }
 

@@ -23,7 +23,7 @@
                 分类{{item.sorts}}
                 <td>
                     <div @click='addToCart(item)' class="btn">加入购物车</div><br>
-                    <div @click='buy(shop)' class="btn">立即购买</div>
+                    <div @click='buy(item)' class="btn">立即购买</div>
                     
                 </td>
                 
@@ -54,7 +54,21 @@
         },
         methods: {
             addToCart(item) {
-                this.$store.commit("addToCart", item);
+                if (this.$store.state.userid == "") {
+                    alert("未登录请先登录")
+                    this.$router.push('/login');
+                } else {
+                    this.$store.commit("addToCart", item);
+                }
+            },
+            buy(item) {
+                if (this.$store.state.userid == "") {
+                    alert("未登录请先登录")
+                    this.$router.push('/login');
+                } else {
+                    this.$router.push('/index/buynowpage/' + item._id);
+                }
+
             },
             con() {
                 console.log("第一种方法")
@@ -64,7 +78,7 @@
 
             },
             getitem() {
-                this.$axios.get('http://localhost:4000/searchdetail?id=' + this.$route.params.id)
+                this.$axios.get('/api/searchdetail?id=' + this.$route.params.id)
                     .then(res => {
                         if (res.data.status == 200) {
 

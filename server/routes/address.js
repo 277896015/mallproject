@@ -27,7 +27,7 @@ router.get("/", function(req, res) {
             console.log("找不到");
             res.json({
                 status: 500,
-                message: "没有收货地址"
+                message: "没有收货地址，请先添加"
             })
 
         }

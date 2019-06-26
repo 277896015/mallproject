@@ -59,16 +59,23 @@
         methods: {
 
             getitem() {
-                this.$axios.get('/api/address?id=' + this.id).then(res => {
-                    if (res.data.status == 200) {
-                        this.results = res.data.results;
-                    } else {
-                        alert(res.data.message);
-
-                    }
+                if (this.$store.state.userid == "") {
+                    alert("未登录请先登录")
+                    this.$router.push('/login');
+                } else {
 
 
-                })
+                    this.$axios.get('/api/address?id=' + this.id).then(res => {
+                        if (res.data.status == 200) {
+                            this.results = res.data.results;
+                        } else {
+                            console.log(res.data.status)
+
+                        }
+
+
+                    })
+                }
 
             },
             addaddress() {
@@ -93,18 +100,6 @@
             },
             updateaddress(item) {
                 this.$router.push('/index/updateaddress/' + item._id);
-                // this.$axios.get('/api/address/updateaddress/?id=' + item._id).then(res => {
-                //     if (res.data.status == 200) {
-                //         alert(res.data.message);
-                //         this.getitem();
-                //     } else {
-                //         alert(res.data.message);
-
-                //     }
-
-
-                // })
-
             },
 
             back() {

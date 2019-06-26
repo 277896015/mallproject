@@ -17,7 +17,17 @@
                 userid: this.$store.state.userid
             }
         },
+        mounted() {
+            this.jiaoyan()
+        },
         methods: {
+            jiaoyan() {
+                if (this.$store.state.userid == "") {
+                    alert("未登录请先登录")
+                    this.$router.push('/login');
+
+                }
+            },
             myinfo() {
                 this.$router.push('/index/myinfo');
 
@@ -37,6 +47,7 @@
             tuichu() {
                 this.$store.commit("delToken");
                 this.$store.commit("delUserid");
+                this.$store.commit("cleancart");
                 this.$router.push('/index/home');
             }
         },

@@ -68,28 +68,38 @@
             },
             addcollect() {
 
-                var obj = {
-                    ...this.results,
-                    scrid: this.$store.state.userid,
-                    productid: this.id
+                if (this.$store.state.userid == "") {
+                    alert("未登录请先登录")
+                    this.$router.push('/login');
+                } else {
 
+
+
+
+                    var obj = {
+                        ...this.results,
+                        scrid: this.$store.state.userid,
+                        productid: this.id
+
+                    }
+                    delete obj._id;
+                    delete obj.__v;
+                    console.log(obj);
+                    this.$axios.post('/api/collect/add/', obj)
+                        .then(res => {
+                            if (res.data.status == 200) {
+                                alert(res.data.message);
+
+                            } else {
+                                alert(res.data.message);
+                            }
+
+
+                        })
                 }
-                delete obj._id;
-                delete obj.__v;
-                console.log(obj);
-                this.$axios.post('/api/collect/add/', obj)
-                    .then(res => {
-                        if (res.data.status == 200) {
-                            alert(res.data.message);
-
-                        } else {
-                            alert(res.data.message);
-                        }
-
-
-                    })
 
             },
+
             getproduct() {
                 this.$axios.get('/api/itemdetail?id=' + this.$route.params.id)
                     .then(res => {

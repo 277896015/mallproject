@@ -56,16 +56,23 @@
         methods: {
 
             getitem() {
-                this.$axios.get('/api/collect?id=' + this.$store.state.userid).then(res => {
-                    if (res.data.status == 200) {
-                        this.results = res.data.results;
-                    } else {
-                        alert(res.data.message);
-
-                    }
+                if (this.$store.state.userid == "") {
+                    alert("未登录请先登录")
+                    this.$router.push('/login');
+                } else {
 
 
-                })
+                    this.$axios.get('/api/collect?id=' + this.$store.state.userid).then(res => {
+                        if (res.data.status == 200) {
+                            this.results = res.data.results;
+                        } else {
+                            alert(res.data.message);
+
+                        }
+
+
+                    })
+                }
 
             },
             quxiao(item) {

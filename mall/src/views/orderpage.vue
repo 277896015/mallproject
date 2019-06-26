@@ -62,14 +62,23 @@
             }
         },
         mounted() {
+            this.jiaoyan();
             this.zongjia();
             this.getitem();
 
 
 
 
+
+
         },
         methods: {
+            jiaoyan() {
+                if (this.$store.state.userid == "") {
+                    alert("未登录请先登录")
+                    this.$router.push('/login');
+                }
+            },
             getitem() {
                 this.$axios.get('/api/address?id=' + this.id).then(res => {
                     if (res.data.status == 200) {
@@ -84,27 +93,30 @@
 
             },
             queding() {
+                if (this.selectedd == "") {
+                    alert("请选择收货地址")
+                } else {
+                    var obj = {
+                        xiadanrenid: this.$store.state.userid,
+                        shangpin: this.results,
+                        shouhuodizhi: this.selectedd,
+                        totalMoney: this.totalMoney
+                    }
+                    console.log(obj)
+                    this.$axios.post('/api/orderpage', obj)
+                        .then(res => {
+                            if (res.data.status == 200) {
+                                alert(res.data.message);
+                                this.$store.commit("cleancart");
+                                this.$router.push('/index/home');
 
-                var obj = {
-                    xiadanrenid: this.$store.state.userid,
-                    shangpin: this.results,
-                    shouhuodizhi: this.selectedd,
-                    totalMoney: this.totalMoney
+                            } else {
+                                alert(res.data.message);
+                            }
+
+
+                        })
                 }
-                console.log(obj)
-                this.$axios.post('/api/orderpage', obj)
-                    .then(res => {
-                        if (res.data.status == 200) {
-                            alert(res.data.message);
-                            this.$store.commit("cleancart");
-                            this.$router.push('/index/home');
-
-                        } else {
-                            alert(res.data.message);
-                        }
-
-
-                    })
 
             },
 
