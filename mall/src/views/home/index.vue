@@ -49,8 +49,8 @@
     <br>
     分类{{item.sorts}}
     <td>
-        <div @click='addToCart(item)' class="btn">加入购物车</div><br>
-        <div @click='buy(shop)' class="btn">立即购买</div>
+        <button @click='addToCart(item)' class="btn">加入购物车</button><br>
+        <button @click='buy(item)' class="btn">立即购买</button>
         
     </td>
     
@@ -114,8 +114,8 @@
                 this.$router.push('/index/notification/list');
 
             },
-            buy: function(shop) {
-                console.log(shop);
+            buy(item) {
+                this.$router.push('/index/buynowpage/' + item._id);
             },
             itemdetail(item) {
 

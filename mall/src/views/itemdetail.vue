@@ -50,7 +50,7 @@
         },
         mounted() {
 
-            this.getitem();
+            this.getproduct();
             this.con();
 
 
@@ -90,8 +90,8 @@
                     })
 
             },
-            getitem() {
-                this.$axios.get('http://localhost:4000/itemdetail?id=' + this.$route.params.id)
+            getproduct() {
+                this.$axios.get('/api/itemdetail?id=' + this.$route.params.id)
                     .then(res => {
                         if (res.data.status == 200) {
 

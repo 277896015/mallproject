@@ -46,12 +46,12 @@
 <script>
     export default {
 
-        name: "orderpage",
-
+        name: "buynowpage",
+        props: ["id"],
         data() {
             return {
-                id: this.$store.state.userid,
-                results: this.$store.state.cartlist,
+                userid: this.$store.state.userid,
+                results: [],
                 result: "",
                 totalMoney: 0,
                 dingdandizhi: {},
@@ -62,8 +62,10 @@
             }
         },
         mounted() {
+
+            this.getproduct();
             this.zongjia();
-            this.getitem();
+
 
 
 
@@ -71,7 +73,7 @@
         },
         methods: {
             getitem() {
-                this.$axios.get('/api/address?id=' + this.id).then(res => {
+                this.$axios.get('/api/address?id=' + this.$store.state.userid).then(res => {
                     if (res.data.status == 200) {
                         this.result = res.data.results;
                     } else {
@@ -81,6 +83,26 @@
 
 
                 })
+
+            },
+            getproduct() {
+                this.$axios.get('/api/itemdetail?id=' + this.$route.params.id)
+                    .then(res => {
+                        if (res.data.status == 200) {
+
+
+                            this.results.push(res.data.results);
+                            console.log(this.results);
+
+
+
+                        } else {
+                            console.log(res)
+                                //this.$router.push('/index/home');
+                        }
+
+
+                    })
 
             },
             queding() {

@@ -53,6 +53,8 @@ app.use('/sortdetail', require('./routes/sortdetail'));
 app.use('/searchdetail', require('./routes/searchdetail'));
 app.use('/notification', require('./routes/notification'));
 app.use('/collect', require('./routes/collect'));
+app.use('/orderpage', require('./routes/orderpage'));
+
 
 
 

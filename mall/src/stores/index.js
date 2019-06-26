@@ -61,22 +61,25 @@ const store = new Vuex.Store({
             } else {
                 items.num--;
                 if (items.num == 0) {
-                    let xiaobiao = state.cartlist.findIndex(shop => shop._id == id)
-                    state.cartlist.splice(xiaobiao, 1)
+                    let xiabiao = state.cartlist.findIndex(shop => shop._id == id)
+                    state.cartlist.splice(xiabiao, 1)
                 }
 
             }
         },
         deleteitem(state, shop) {
             var id = shop._id;
-            let xiaobiao = state.cartlist.findIndex(shop => shop._id == id)
+            let xiabiao = state.cartlist.findIndex(shop => shop._id == id)
                 //如果没有找到这项数据items，那么就添加到cartlist数组中
-            if (xiaobiao == -1) {
-                console.log(xiaobiao);
+            if (xiabiao == -1) {
+                console.log(xiabiao);
             } else {
-                console.log(xiaobiao);
-                state.cartlist.splice(xiaobiao, 1)
+                console.log(xiabiao);
+                state.cartlist.splice(xiabiao, 1)
             }
+        },
+        cleancart(state) {
+            state.cartlist.splice(0, state.cartlist.length);
         },
 
     },

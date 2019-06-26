@@ -113,6 +113,22 @@ const router = new Router({
                 import ('@/views/orderpage.vue'),
 
         },
+        { //订单列表路由
+            path: '/index/orderlist',
+            name: 'orderlist',
+
+            component: () =>
+                import ('@/views/orderlist.vue'),
+
+        },
+        { //立即购买动态路由
+            path: '/index/buynowpage/:id',
+            name: 'buynowpage',
+            props: true,
+            component: () =>
+                import ('@/views/buynowpage.vue'),
+
+        },
         // {
         //     path: "/page1",
         //     name: "page1",

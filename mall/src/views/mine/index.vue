@@ -2,8 +2,8 @@
     <div class="flexcolumn">
         <div @click.prevent="myinfo()"><i class="iconfont icon-yonghu" ></i>个人信息</div>
         <div @click.privent="collectlist()"><i class="iconfont icon-shoucang"></i>我的收藏</div>
-        <div> <i class="iconfont icon-order_icon"></i>我的订单</div>
-        <div><i class="iconfont icon-hongbao"></i> 红 包 </div>
+        <div @click.privent="orderlist()"> <i class="iconfont icon-order_icon"></i>我的订单</div>
+       
         <div @click.prevent="myaddress()"><i class="iconfont icon-unie65c"></i>收货地址</div>
         <div @click.prevent="tuichu()">退出</div>
         
@@ -28,6 +28,10 @@
             },
             collectlist() {
                 this.$router.push('/index/collect/list');
+
+            },
+            orderlist() {
+                this.$router.push('/index/orderlist');
 
             },
             tuichu() {

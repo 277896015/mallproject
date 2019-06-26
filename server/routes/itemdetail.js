@@ -9,6 +9,7 @@ router.get('/list', function(req, res) {
     //获取数据库数据
     product.find({}, function(err, results) {
         if (err) throw err;
+        console.log(results);
         //res.render('list', { arr: results })
         res.json({
             status: 200,
