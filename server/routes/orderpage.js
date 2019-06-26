@@ -27,7 +27,7 @@ router.post("/", function(req, res) {
 })
 
 router.get("/", function(req, res) {
-    console.log("进入收藏列表路由")
+    console.log("进入订单列表路由")
         //数据库匹配数据
     console.log(req.query.id)
 
@@ -35,7 +35,7 @@ router.get("/", function(req, res) {
         if (err) throw err;
 
         if (results.length) { //匹配成功
-            console.log('收藏如下');
+            console.log('订单如下');
             res.json({
                 status: 200,
                 results: results,
@@ -45,7 +45,7 @@ router.get("/", function(req, res) {
             console.log("找不到");
             res.json({
                 status: 500,
-                message: "没有收藏"
+                message: "没有订单"
             })
 
         }
