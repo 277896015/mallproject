@@ -22,8 +22,8 @@
                 <br>
                 分类{{item.sorts}}
                 <td>
-                    <div @click='addToCart(item)' class="btn">加入购物车</div><br>
-                    <div @click='buy(item)' class="btn">立即购买</div>
+                    <button @click='addToCart(item)' class="btn">加入购物车</button><br>
+                    <button @click='buy(item)' class="btn">立即购买</button>
                     
                 </td>
                 
@@ -59,6 +59,7 @@
                     this.$router.push('/login');
                 } else {
                     this.$store.commit("addToCart", item);
+                    alert("加入购物车成功");
                 }
             },
             buy(item) {
@@ -122,6 +123,11 @@
     .productimg {
         height: 10vh;
         width: 20vw;
+    }
+    
+    .btn {
+        border-radius: 15px;
+        background-color: aqua;
     }
     
     .productimg img {

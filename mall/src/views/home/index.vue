@@ -96,6 +96,8 @@
                     this.$router.push('/login');
                 } else {
                     this.$store.commit("addToCart", item);
+                    alert("加入购物车成功");
+
                 }
 
 
