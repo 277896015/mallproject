@@ -6,14 +6,9 @@
                 <input type="text" v-model="searchs" placeholder="名称、分类、描述" >
                <a @click.prevent="search()"><i class="iconfont icon-xiazai17"></i></a> 
             </form>
-            
             <i class="iconfont icon-xiaoxitongzhi" @click="tongzhi()"></i>
-      </div>
-         
-      
-  <div class="wrapper">
-
-      
+      </div>   
+  <div class="wrapper">     
     <section >
          <div class="lunbo">
                 <mt-swipe :auto="4000">
@@ -24,26 +19,16 @@
             </div>
             <div class="fenlei">
                   <div class="wrflex">
-                        <div  class="sort1" @click.prevent="sortdetail('手机')">
-                            手机
-                           </div>
-                           <div class="sort2" @click.prevent="sortdetail('耳机')">
-                             耳机
-                              </div>
-                              <div class="sort3"  @click.prevent="sortdetail('配件')">
-                                配件
-                                 </div>
-                                 <div  class="sort4" @click.prevent="sortdetail('生活')">
-                                       生活
-                                        </div>
+                      <div class="sort1" @click.prevent="sortdetail('手机')">手机</div>
+                      <div class="sort2" @click.prevent="sortdetail('耳机')">耳机</div>
+                      <div class="sort3" @click.prevent="sortdetail('配件')">配件</div>
+                      <div class="sort4" @click.prevent="sortdetail('生活')">生活</div>
                   </div>
-                </div>
-               
-        <div class="product" v-for="(item,index) in results" >
-<div class="wrs">
+                </div>    
+<div class="product" v-for="(item,index) in results" >
+    <div class="wrs">
     <div class="productimg" @click.prevent="itemdetail(item)"><img :src="'/api'+item.pic" alt=""></div>
     <div>{{item.title}}</div>
-   
     <div>价格{{item.price}}</div>
     运费{{item.fee}}
     <br>
@@ -51,23 +36,10 @@
     <td>
         <button @click='addToCart(item)' class="btn">加入购物车</button><br>
         <button @click='buy(item)' class="btn">立即购买</button>
-        
     </td>
-    
 </div>
-        
-
         </div>
-
-
-
     </section>
-     
-        
-      
-    
-   
-   
   </div>
 </div>
 </template>

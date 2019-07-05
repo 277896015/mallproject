@@ -7,8 +7,6 @@ const formidable = require('formidable');
 
 
 router.post('/', function(req, res) {
-    //提交的数据保存到数据库
-    //req.body
     const form = new formidable.IncomingForm();
     form.keepExtensions = true;
     form.uploadDir = path.join(__dirname, "../", "uploads");
@@ -16,24 +14,14 @@ router.post('/', function(req, res) {
         if (err) throw err;
         user.find({
             username: fields.username,
-
-
-
         }, function(err, result) {
             if (err) throw err;
-
             if (result.length) { //数据库注册用户重复
-
-
-
                 res.json({
                     status: 600,
                     message: "用户名已存在"
-
                 })
-
             } else { //数据库无重名则可写入
-
                 var obj = {
                     ...fields,
                     touxiang: "/" + path.basename(files.pic.path),

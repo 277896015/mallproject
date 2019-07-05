@@ -6,6 +6,10 @@
     /* column：主轴为垂直方向，起点在上沿。行布局 */
 }
 
+* {
+    touch-action: pan-y;
+}
+
 section {
     flex: 1;
     overflow: auto;

@@ -32,9 +32,8 @@ const store = new Vuex.Store({
         },
         addToCart(state, item) {
             var id = item._id;
-
-            //遍历cartlist数组，find方法找出点击的id和cartlist中的id是相等的情况下，这项数据让变量items接收
-            let items = state.cartlist.find(item => item._id == id)
+            //遍历cartlist数组，find方法找出cartlist中的商品id是否与item的_id相等，相等的话，返回值让变量items接收
+            let items = state.cartlist.find(element => element._id == id)
                 //如果没有找到这项数据items，那么就添加到cartlist数组中
             if (items == undefined) {
                 state.cartlist.push(item)
@@ -44,7 +43,7 @@ const store = new Vuex.Store({
         },
         additem(state, shop) {
             var id = shop._id;
-            let items = state.cartlist.find(shop => shop._id == id)
+            let items = state.cartlist.find(element => element._id == id)
                 //如果没有找到这项数据items，那么就添加到cartlist数组中
             if (items == undefined) {
                 console.log(items);
@@ -54,14 +53,13 @@ const store = new Vuex.Store({
         },
         descitem(state, shop) {
             var id = shop._id;
-            let items = state.cartlist.find(shop => shop._id == id)
-                //如果没有找到这项数据items，那么就添加到cartlist数组中
+            let items = state.cartlist.find(element => element._id == id)
             if (items == undefined) {
                 console.log(items);
             } else {
                 items.num--;
                 if (items.num == 0) {
-                    let xiabiao = state.cartlist.findIndex(shop => shop._id == id)
+                    let xiabiao = state.cartlist.findIndex(element => element._id == id)
                     state.cartlist.splice(xiabiao, 1)
                 }
 
@@ -69,8 +67,8 @@ const store = new Vuex.Store({
         },
         deleteitem(state, shop) {
             var id = shop._id;
-            let xiabiao = state.cartlist.findIndex(shop => shop._id == id)
-                //如果没有找到这项数据items，那么就添加到cartlist数组中
+            let xiabiao = state.cartlist.findIndex(element => element._id == id)
+
             if (xiabiao == -1) {
                 console.log(xiabiao);
             } else {

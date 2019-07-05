@@ -62,23 +62,15 @@
         },
         methods: {
             send() {
-
-
                 var regUsername = /^[a-zA-Z0-9_]{3,16}$/;
-
-
                 if (this.formData.username == "") {
                     alert("用户名不能为空");
-
                 } else if ((regUsername.test(this.formData.username)) == false) {
-                    alert("用户名需要是3至16位英文")
-
+                    alert("用户名需要是3至16位英文或数字或下划线")
                 } else if (this.formData.password == "") {
                     alert("密码不能为空");
-
                 } else if (this.formData.registercode == "") {
                     alert("注册码不能为空");
-
                 } else if (this.$refs.image.files[0] == undefined) {
                     alert("必须上传头像");
                 } else {
@@ -87,35 +79,20 @@
                     data.append("password", this.formData.password);
                     data.append("registercode", this.formData.registercode);
                     data.append("email", this.formData.email);
-                    //图片的数据怎么拿
-                    // console.log(this.$refs.image)
-                    // console.dir(this.$refs.image)
                     data.append("pic", this.$refs.image.files[0]);
-
-
                     this.$axios.post('/api/register', data)
                         .then(res => {
-
                             if (res.data.status == 200) {
                                 alert("注册成功");
                                 this.$router.push('/login');
 
                             } else if (res.data.status == 600) {
                                 alert(res.data.message);
-
-
                             } else {
                                 alert("注册失败，请重新注册");
                             }
-
-
-
-
                         })
                 }
-
-
-
             },
             back() {
                 this.$router.push('/login');
